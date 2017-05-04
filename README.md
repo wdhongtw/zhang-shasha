@@ -5,8 +5,7 @@ two given trees.
 
 The algorithm is provided by Kaizhong Zhang and Dennis Shasha.
 
-Most parts of library and test code is ported from [this Python project]
-(https://github.com/timtadh/zhang-shasha).
+Most parts of library and test code is ported from [this Python project](https://github.com/timtadh/zhang-shasha).
 
 ## References
 
