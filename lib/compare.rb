@@ -1,4 +1,4 @@
-require './lib/simpletree'
+require 'simpletree'
 
 # Tree wrapper for tree edit distance algorithm
 class AnnotatedTree

@@ -1,4 +1,4 @@
-require './lib/simpletree'
+require 'simpletree'
 require 'test/unit'
 
 class TestSimpleTree < Test::Unit::TestCase

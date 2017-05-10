@@ -1,5 +1,5 @@
-require './lib/simpletree'
-require './lib/compare'
+require 'simpletree'
+require 'compare'
 require 'test/unit'
 
 class TestRegress < Test::Unit::TestCase
