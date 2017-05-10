@@ -1,32 +1,32 @@
-require 'simpletree'
+require 'zss'
 require 'test/unit'
 
 class TestSimpleTree < Test::Unit::TestCase
   def test_node_construct
     foo =
-      Node.new('f').addkid(
-        Node.new('d').addkid(
-          Node.new('a')
+      ZSS::Node.new('f').addkid(
+        ZSS::Node.new('d').addkid(
+          ZSS::Node.new('a')
         ).addkid(
-          Node.new('c').addkid(
-            Node.new('b')
+          ZSS::Node.new('c').addkid(
+            ZSS::Node.new('b')
           )
         )
       ).addkid(
-        Node.new('e')
+        ZSS::Node.new('e')
       )
 
     bar =
-      Node.new('f').addkid(
-        Node.new('c').addkid(
-          Node.new('d').addkid(
-            Node.new('a')
+      ZSS::Node.new('f').addkid(
+        ZSS::Node.new('c').addkid(
+          ZSS::Node.new('d').addkid(
+            ZSS::Node.new('a')
           ).addkid(
-            Node.new('b')
+            ZSS::Node.new('b')
           )
         )
       ).addkid(
-        Node.new('e')
+        ZSS::Node.new('e')
       )
 
     assert_not_nil(foo.get('a'))

@@ -1,94 +1,93 @@
-require 'simpletree'
-require 'compare'
+require 'zss'
 require 'test/unit'
 
 class TestRegress < Test::Unit::TestCase
   def test_empty_tree_distance
-    assert_equal(simple_distance(Node.new(''), Node.new('')), 0)
-    assert_equal(simple_distance(Node.new('a'), Node.new('')), 1)
-    assert_equal(simple_distance(Node.new(''), Node.new('b')), 1)
+    assert_equal(ZSS.simple_distance(ZSS::Node.new(''), ZSS::Node.new('')), 0)
+    assert_equal(ZSS.simple_distance(ZSS::Node.new('a'), ZSS::Node.new('')), 1)
+    assert_equal(ZSS.simple_distance(ZSS::Node.new(''), ZSS::Node.new('b')), 1)
   end
 
   def test_paper_tree
     foo =
-      Node.new('f').addkid(
-        Node.new('d').addkid(
-          Node.new('a')
+      ZSS::Node.new('f').addkid(
+        ZSS::Node.new('d').addkid(
+          ZSS::Node.new('a')
         ).addkid(
-          Node.new('c').addkid(
-            Node.new('b')
+          ZSS::Node.new('c').addkid(
+            ZSS::Node.new('b')
           )
         )
       ).addkid(
-        Node.new('e')
+        ZSS::Node.new('e')
       )
 
     bar =
-      Node.new('f').addkid(
-        Node.new('c').addkid(
-          Node.new('d').addkid(
-            Node.new('a')
+      ZSS::Node.new('f').addkid(
+        ZSS::Node.new('c').addkid(
+          ZSS::Node.new('d').addkid(
+            ZSS::Node.new('a')
           ).addkid(
-            Node.new('b')
+            ZSS::Node.new('b')
           )
         )
       ).addkid(
-        Node.new('e')
+        ZSS::Node.new('e')
       )
 
-    assert_equal(simple_distance(foo, bar), 2)
+    assert_equal(ZSS.simple_distance(foo, bar), 2)
   end
 
   def test_simple_label_change
     foo =
-      Node.new('f').addkid(
-        Node.new('a').addkid(
-          Node.new('h')
+      ZSS::Node.new('f').addkid(
+        ZSS::Node.new('a').addkid(
+          ZSS::Node.new('h')
         ).addkid(
-          Node.new('c').addkid(
-            Node.new('l')
+          ZSS::Node.new('c').addkid(
+            ZSS::Node.new('l')
           )
         )
       ).addkid(
-        Node.new('e')
+        ZSS::Node.new('e')
       )
 
     bar =
-      Node.new('f').addkid(
-        Node.new('a').addkid(
-          Node.new('d')
+      ZSS::Node.new('f').addkid(
+        ZSS::Node.new('a').addkid(
+          ZSS::Node.new('d')
         ).addkid(
-          Node.new('r').addkid(
-            Node.new('b')
+          ZSS::Node.new('r').addkid(
+            ZSS::Node.new('b')
           )
         )
       ).addkid(
-        Node.new('e')
+        ZSS::Node.new('e')
       )
 
-    assert_equal(simple_distance(foo, bar), 3)
+    assert_equal(ZSS.simple_distance(foo, bar), 3)
   end
 
   def test_incorrect_behavior_regression
     foo =
-      Node.new('a').addkid(
-        Node.new('b').addkid(
-          Node.new('x')
+      ZSS::Node.new('a').addkid(
+        ZSS::Node.new('b').addkid(
+          ZSS::Node.new('x')
         ).addkid(
-          Node.new('y')
+          ZSS::Node.new('y')
         )
       )
 
     bar =
-      Node.new('a').addkid(
-        Node.new('x')
+      ZSS::Node.new('a').addkid(
+        ZSS::Node.new('x')
       ).addkid(
-        Node.new('b').addkid(
-          Node.new('y')
+        ZSS::Node.new('b').addkid(
+          ZSS::Node.new('y')
         )
       )
 
-    assert_equal(simple_distance(foo, bar), 2)
+    assert_equal(ZSS.simple_distance(foo, bar), 2)
   end
 
   def test_hash
@@ -117,7 +116,7 @@ class TestRegress < Test::Unit::TestCase
     get_label = ->(node) { node['name'] }
     label_dist = ->(label_a, label_b) { label_a == label_b ? 0 : 1 }
 
-    dist = simple_distance(
+    dist = ZSS.simple_distance(
       foo,
       bar,
       get_children,

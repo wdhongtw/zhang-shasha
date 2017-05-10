@@ -1,33 +1,32 @@
-require 'simpletree'
-require 'compare'
+require 'zss'
 require 'test/unit'
 
 class TestAnnotatedTree < Test::Unit::TestCase
   def create_tree
     foo =
-      Node.new('f').addkid(
-        Node.new('d').addkid(
-          Node.new('a')
+      ZSS::Node.new('f').addkid(
+        ZSS::Node.new('d').addkid(
+          ZSS::Node.new('a')
         ).addkid(
-          Node.new('c').addkid(
-            Node.new('b')
+          ZSS::Node.new('c').addkid(
+            ZSS::Node.new('b')
           )
         )
       ).addkid(
-        Node.new('e')
+        ZSS::Node.new('e')
       )
 
     bar =
-      Node.new('f').addkid(
-        Node.new('c').addkid(
-          Node.new('d').addkid(
-            Node.new('a')
+      ZSS::Node.new('f').addkid(
+        ZSS::Node.new('c').addkid(
+          ZSS::Node.new('d').addkid(
+            ZSS::Node.new('a')
           ).addkid(
-            Node.new('b')
+            ZSS::Node.new('b')
           )
         )
       ).addkid(
-        Node.new('e')
+        ZSS::Node.new('e')
       )
 
     [foo, bar]
@@ -35,12 +34,12 @@ class TestAnnotatedTree < Test::Unit::TestCase
 
   def test_constructor
     foo, = create_tree
-    AnnotatedTree.new(foo, Node.method(:get_children))
+    ZSS::AnnotatedTree.new(foo, ZSS::Node.method(:get_children))
   end
 
   def test_nodes
     foo, bar = create_tree.map do |tree|
-      AnnotatedTree.new(tree, Node.method(:get_children))
+      ZSS::AnnotatedTree.new(tree, ZSS::Node.method(:get_children))
     end
 
     foo.ids.reverse.each_with_index do |i, nid|
@@ -53,7 +52,7 @@ class TestAnnotatedTree < Test::Unit::TestCase
 
   def test_left_most_descendent
     foo, bar = create_tree.map do |tree|
-      AnnotatedTree.new(tree, Node.method(:get_children))
+      ZSS::AnnotatedTree.new(tree, ZSS::Node.method(:get_children))
     end
 
     assert_equal(foo.lmds[0], 0)
@@ -72,7 +71,7 @@ class TestAnnotatedTree < Test::Unit::TestCase
 
   def test_keyroots
     foo, bar = create_tree.map do |tree|
-      AnnotatedTree.new(tree, Node.method(:get_children))
+      ZSS::AnnotatedTree.new(tree, ZSS::Node.method(:get_children))
     end
     assert_equal(foo.keyroots, [2, 4, 5])
     assert_equal(bar.keyroots, [1, 4, 5])

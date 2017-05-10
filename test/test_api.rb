@@ -1,33 +1,32 @@
-require 'simpletree'
-require 'compare'
+require 'zss'
 require 'test/unit'
 
 class TestApi < Test::Unit::TestCase
   def create_tree
     foo =
-      Node.new('f').addkid(
-        Node.new('d').addkid(
-          Node.new('a')
+      ZSS::Node.new('f').addkid(
+        ZSS::Node.new('d').addkid(
+          ZSS::Node.new('a')
         ).addkid(
-          Node.new('c').addkid(
-            Node.new('b')
+          ZSS::Node.new('c').addkid(
+            ZSS::Node.new('b')
           )
         )
       ).addkid(
-        Node.new('e')
+        ZSS::Node.new('e')
       )
 
     bar =
-      Node.new('f').addkid(
-        Node.new('c').addkid(
-          Node.new('d').addkid(
-            Node.new('a')
+      ZSS::Node.new('f').addkid(
+        ZSS::Node.new('c').addkid(
+          ZSS::Node.new('d').addkid(
+            ZSS::Node.new('a')
           ).addkid(
-            Node.new('b')
+            ZSS::Node.new('b')
           )
         )
       ).addkid(
-        Node.new('e')
+        ZSS::Node.new('e')
       )
 
     [foo, bar]
@@ -36,9 +35,9 @@ class TestApi < Test::Unit::TestCase
   def test_simple_distance
     foo, bar = create_tree
 
-    dist = simple_distance(
-      foo, bar, Node.method(:get_children), Node.method(:get_label),
-      Kernel.method(:bool_dist)
+    dist = ZSS.simple_distance(
+      foo, bar, ZSS::Node.method(:get_children), ZSS::Node.method(:get_label),
+      ZSS.method(:bool_dist)
     )
     assert_equal(dist, 2)
   end
@@ -50,28 +49,28 @@ class TestApi < Test::Unit::TestCase
     large_update_cost = ->(_, _) { 3 }
     no_insert_cost = ->(_) { 0 }
 
-    tree_a = Node.new('a')
-    tree_b = Node.new('b')
-    tree_c = Node.new('a', [Node.new('x')])
+    tree_a = ZSS::Node.new('a')
+    tree_b = ZSS::Node.new('b')
+    tree_c = ZSS::Node.new('a', [ZSS::Node.new('x')])
 
     assert(
-      distance(
-        tree_a, tree_b, Node.method(:get_children),
+      ZSS.distance(
+        tree_a, tree_b, ZSS::Node.method(:get_children),
         insert_cost, remove_cost, small_update_cost
       ) == 1
     )
     assert(
-      distance(
-        tree_a, tree_b, Node.method(:get_children),
+      ZSS.distance(
+        tree_a, tree_b, ZSS::Node.method(:get_children),
         insert_cost, remove_cost, large_update_cost
       ) == 2
     )
     assert(
-      distance(
-        tree_a, tree_c, Node.method(:get_children),
+      ZSS.distance(
+        tree_a, tree_c, ZSS::Node.method(:get_children),
         insert_cost, remove_cost, small_update_cost
-      ) > distance(
-        tree_a, tree_c, Node.method(:get_children),
+      ) > ZSS.distance(
+        tree_a, tree_c, ZSS::Node.method(:get_children),
         no_insert_cost, remove_cost, small_update_cost
       )
     )

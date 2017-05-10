@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name = 'zss'
-  spec.version = '0.1.0'
+  spec.version = '0.1.1'
   spec.authors = ['Weida Hong']
   spec.email = 'wdhongtw@gmail.com'
   spec.summary = 'Tree edit distance algorithm by Zhang and Shasha'
