@@ -1,4 +1,5 @@
 require 'rake/testtask'
+require 'yard'
 
 Rake::TestTask.new do |task|
   task.libs << 'test' << 'lib'
@@ -6,5 +7,7 @@ Rake::TestTask.new do |task|
   task.verbose = true
 end
 
-task :default do
+YARD::Rake::YardocTask.new do |t|
+  t.files   = ['lib/**/*.rb']
+  t.options = []
 end

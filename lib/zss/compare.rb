@@ -12,6 +12,9 @@ module ZSS
 
     attr_accessor :keyroots
 
+    # Prepare all information required by tree edit distance algorithm
+    # @param root [Node] root node of the tree
+    # @param get_children [Method] method to get child list from some node
     def initialize(root, get_children)
       @root = root
       @get_children = get_children
@@ -66,11 +69,21 @@ module ZSS
     end
   end
 
+  # @return [Integer] 0 if two args are the same, 1 otherwise
   def bool_dist(foo, bar)
     foo == bar ? 0 : 1
   end
 
   # Compute tree edit distance between tree foo and tree bar
+  #
+  # This function assume unified cost for insert, remove and update operations.
+  # See distance for more information.
+  # @param foo [Node] root of first tree to compare
+  # @param bar [Node] root of second tree to compare
+  # @param get_children [Method] method to get child list from these nodes
+  # @param get_label [Method] method to get label from these nodes
+  # @param label_dist [Method] method to compute distance between label
+  # @return [Numeric] tree edit distance between foo and bar
   def simple_distance(
     foo,
     bar,
@@ -94,6 +107,18 @@ module ZSS
     )
   end
 
+  # Compute tree edit distance between tree foo and tree bar
+  #
+  # This funciton let user to customize different insert, remove, update cost,
+  # but these cost function take nodes as input, not labels
+  # Use simple_distance for normal usage.
+  # @param foo [Node] root of first tree to compare
+  # @param bar [Node] root of second tree to compare
+  # @param get_children [Method] method to get child list from these nodes
+  # @param insert_cost [Method] cost function of insert operation
+  # @param remove_cost [Method] cost function of remove operation
+  # @param update_cost [Method] cost function of update operation
+  # @return [Numeric] tree edit distance between foo and bar
   def distance(foo, bar, get_children, insert_cost, remove_cost, update_cost)
     foo = AnnotatedTree.new(foo, get_children)
     bar = AnnotatedTree.new(bar, get_children)
